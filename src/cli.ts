@@ -13,12 +13,15 @@ import { getAllAgents, isValidAgent } from './core/agents.ts';
 import { createRegistry } from './registry/index.ts';
 import type { AgentId, CategoryConfig, CategoryId, RegistryConfig } from './core/types.ts';
 
+// Read version from package.json
+import pkg from '../package.json' with { type: 'json' };
+
 const program = new Command();
 
 program
   .name('skill-rule')
   .description('Sync coding rules to AI agents')
-  .version('1.1.1');
+  .version(pkg.version);
 
 // Init command
 program
