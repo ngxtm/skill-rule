@@ -5,7 +5,7 @@ metadata:
   labels: [nestjs, cron, scheduling, redis]
   triggers:
     files: ['**/*.service.ts']
-    keywords: [@Cron, CronExpression, ScheduleModule]
+    keywords: ["@Cron, CronExpression, ScheduleModule"]
 ---
 
 # Task Scheduling & Jobs

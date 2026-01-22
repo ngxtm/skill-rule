@@ -5,7 +5,7 @@ metadata:
   labels: [state-management, riverpod, dependency-injection, reactive]
   triggers:
     files: ['**_provider.dart', '**_notifier.dart']
-    keywords: [riverpod, ProviderScope, ConsumerWidget, Notifier, AsyncValue, ref.watch, @riverpod]
+    keywords: [riverpod, ProviderScope, ConsumerWidget, Notifier, AsyncValue, ref.watch, "@riverpod"]
 ---
 
 # Riverpod State Management

@@ -21,19 +21,26 @@ export class LocalRegistryAdapter implements RegistryAdapter {
     }
 
     const rules: Rule[] = [];
-    const files = await readdir(categoryPath, { withFileTypes: true });
+    await this.scanDir(categoryPath, category, rules);
+    return rules;
+  }
 
-    for (const file of files) {
-      if (file.isFile() && file.name.endsWith('.rule.md')) {
-        const filePath = join(categoryPath, file.name);
-        const content = await readFile(filePath, 'utf-8');
-        const relativePath = `rules/${category}/${file.name}`;
+  // Recursively scan directory for rule files
+  private async scanDir(dirPath: string, category: string, rules: Rule[]): Promise<void> {
+    const entries = await readdir(dirPath, { withFileTypes: true });
+
+    for (const entry of entries) {
+      const fullPath = join(dirPath, entry.name);
+
+      if (entry.isDirectory()) {
+        await this.scanDir(fullPath, category, rules);
+      } else if (entry.isFile() && (entry.name.endsWith('.rule.md') || entry.name === 'SKILL.md')) {
+        const content = await readFile(fullPath, 'utf-8');
+        const relativePath = fullPath.replace(this.basePath + '/', '').replace(this.basePath + '\\', '');
         const rule = ruleParser.parse(content, relativePath);
         rules.push(rule);
       }
     }
-
-    return rules;
   }
 
   async fetchRule(path: string): Promise<Rule | null> {

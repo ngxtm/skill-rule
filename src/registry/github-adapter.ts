@@ -47,7 +47,7 @@ export class GitHubRegistryAdapter implements RegistryAdapter {
     const ruleFiles = tree.tree.filter(
       item => item.type === 'blob' &&
               item.path.startsWith(`rules/${category}/`) &&
-              item.path.endsWith('.rule.md')
+              (item.path.endsWith('.rule.md') || item.path.endsWith('SKILL.md'))
     );
 
     const rules: Rule[] = [];
