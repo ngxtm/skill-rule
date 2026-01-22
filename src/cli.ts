@@ -18,7 +18,7 @@ const program = new Command();
 program
   .name('skill-rule')
   .description('Sync coding rules to AI agents')
-  .version('1.0.0');
+  .version('1.1.1');
 
 // Init command
 program
