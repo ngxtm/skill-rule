@@ -8,7 +8,7 @@ import { Command } from 'commander';
 import pc from 'picocolors';
 import { ConfigManager } from './core/config.ts';
 import { SyncEngine } from './core/sync.ts';
-import { detectFrameworks, getFrameworkName } from './utils/detect.ts';
+import { detectFrameworks, getFrameworkName, detectInPath, isValidCategory } from './utils/detect.ts';
 import { getAllAgents, isValidAgent } from './core/agents.ts';
 import { createRegistry } from './registry/index.ts';
 import type { AgentId, CategoryConfig, CategoryId, RegistryConfig } from './core/types.ts';
@@ -26,6 +26,7 @@ program
   .description('Initialize rules config for this project')
   .option('-a, --agents <agents>', 'Comma-separated agent list', 'cursor,claude')
   .option('-r, --registry <url>', 'Registry URL')
+  .option('-s, --scan <dirs>', 'Additional directories to scan (comma-separated)')
   .option('-y, --yes', 'Skip prompts, use defaults')
   .action(async (opts) => {
     const cwd = process.cwd();
@@ -38,8 +39,13 @@ program
 
     console.log(pc.cyan('Detecting frameworks...'));
 
-    // Detect frameworks
-    const detected = await detectFrameworks(cwd);
+    // Parse custom scan dirs from --scan flag
+    const customScanDirs = opts.scan
+      ? opts.scan.split(',').map((d: string) => d.trim())
+      : undefined;
+
+    // Detect frameworks with custom dirs
+    const detected = await detectFrameworks(cwd, customScanDirs);
 
     if (detected.size === 0) {
       console.log(pc.yellow('No frameworks detected.'));
@@ -192,6 +198,90 @@ program
     for (const agent of getAllAgents()) {
       console.log(`  ${pc.bold(agent.id.padEnd(12))} ${agent.name}`);
       console.log(pc.dim(`    Rules: ${agent.rulesPath}`));
+    }
+  });
+
+// Add command - add paths or categories post-init
+program
+  .command('add')
+  .description('Add paths or categories to config')
+  .argument('<items...>', 'Paths (./lib) or category names (react, nestjs)')
+  .option('--no-sync', 'Skip auto-sync after adding')
+  .action(async (items: string[], opts) => {
+    const cwd = process.cwd();
+    const configMgr = new ConfigManager(cwd);
+
+    if (!(await configMgr.exists())) {
+      console.log(pc.red('Config not found. Run "sr init" first.'));
+      return;
+    }
+
+    const projectConfig = await configMgr.load();
+    const addedCategories: CategoryId[] = [];
+    const errors: string[] = [];
+
+    for (const item of items) {
+      // Check if item is a path (starts with ./ or /) or category name
+      const isPath = item.startsWith('./') || item.startsWith('/') || item.startsWith('.\\');
+
+      if (isPath) {
+        // Detect frameworks in path
+        const detected = await detectInPath(cwd, item);
+        if (detected.length === 0) {
+          errors.push(`No frameworks detected in: ${item}`);
+        } else {
+          for (const cat of detected) {
+            if (!projectConfig.categories[cat]) {
+              projectConfig.categories[cat] = { enabled: true };
+              addedCategories.push(cat);
+              console.log(pc.green(`  + ${getFrameworkName(cat)} (from ${item})`));
+            }
+          }
+        }
+      } else {
+        // Validate category name
+        if (isValidCategory(item)) {
+          const catId = item as CategoryId;
+          if (!projectConfig.categories[catId]) {
+            projectConfig.categories[catId] = { enabled: true };
+            addedCategories.push(catId);
+            console.log(pc.green(`  + ${getFrameworkName(catId)}`));
+          } else {
+            console.log(pc.dim(`  = ${item} (already exists)`));
+          }
+        } else {
+          errors.push(`Unknown category: ${item}`);
+        }
+      }
+    }
+
+    // Save updated config
+    if (addedCategories.length > 0) {
+      await configMgr.save(projectConfig);
+      console.log(pc.green(`\nAdded ${addedCategories.length} category(s)`));
+    }
+
+    // Show errors
+    for (const err of errors) {
+      console.log(pc.yellow(`  ! ${err}`));
+    }
+
+    // Auto-sync unless --no-sync
+    if (opts.sync && addedCategories.length > 0) {
+      console.log(pc.cyan('\nSyncing rules...'));
+      const engine = new SyncEngine(cwd);
+      const result = await engine.sync(projectConfig);
+
+      if (result.success) {
+        console.log(pc.green(`Synced ${result.synced.length} rule(s)`));
+      } else {
+        console.log(pc.red('Sync failed'));
+        for (const err of result.errors) {
+          console.log(pc.red(`  ${err.message}`));
+        }
+      }
+    } else if (!opts.sync) {
+      console.log(pc.dim('\nRun "sr sync" to fetch rules.'));
     }
   });
 
