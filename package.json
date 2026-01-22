@@ -1,6 +1,6 @@
 {
   "name": "@ngxtm/skill-rule",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "CLI to manage and sync coding rules across AI agents",
   "type": "module",
   "bin": {
