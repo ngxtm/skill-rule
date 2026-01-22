@@ -1,0 +1,49 @@
+{
+  "name": "@ngxtm/skill-rule",
+  "version": "1.0.0",
+  "description": "CLI to manage and sync coding rules across AI agents",
+  "type": "module",
+  "bin": {
+    "skill-rule": "dist/cli.js",
+    "sr": "dist/cli.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngxtm/skill-rule.git"
+  },
+  "scripts": {
+    "build": "bun build src/cli.ts --outdir dist --target node",
+    "dev": "bun run src/cli.ts",
+    "test": "bun test",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src/"
+  },
+  "files": [
+    "dist",
+    "rules"
+  ],
+  "keywords": [
+    "ai",
+    "agent",
+    "cursor",
+    "claude",
+    "copilot",
+    "rules",
+    "cli"
+  ],
+  "author": "Minh",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "gray-matter": "^4.0.3",
+    "picocolors": "^1.0.0",
+    "yaml": "^2.3.4"
+  }
+}
