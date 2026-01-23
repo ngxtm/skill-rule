@@ -1,14 +1,15 @@
-# Testing References
+# JUnit and Mockito Testing References
 
 ## References
 
-- [**Test Slices**](test-slices.md) - @WebMvcTest, @DataJpaTest, @JsonTest
-- [**Mockito Patterns**](mockito-patterns.md) - Stubbing, verification, argument captors
+- [**JUnit 5 Patterns**](junit5-patterns.md) - Test structure, parameterized tests, assertions
+- [**Mockito Patterns**](mockito-patterns.md) - Mocking, stubbing, verification, spying
+- [**Spring Boot Testing**](spring-boot-testing.md) - Slice tests, integration, Testcontainers
 
 ## Quick Checks
 
-- [ ] Use JUnit 5 (Jupiter)
-- [ ] Given-When-Then structure
-- [ ] Test slices over @SpringBootTest when possible
-- [ ] AssertJ for fluent assertions
-- [ ] One concept per test method
+- [ ] Use @ExtendWith(MockitoExtension.class)
+- [ ] @DisplayName for readable test names
+- [ ] Parameterized tests for multiple inputs
+- [ ] Slice tests (@WebMvcTest, @DataJpaTest) for focused testing
+- [ ] Testcontainers for real database tests

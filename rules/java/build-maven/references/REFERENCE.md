@@ -2,11 +2,13 @@
 
 ## References
 
-- [**Dependency Management**](dependency-management.md) - BOMs, version control, exclusions
+- [**Lifecycle Phases**](lifecycle-phases.md) - Build phases, plugin configuration, multi-module
+- [**Dependency Management**](dependency-management.md) - Scopes, BOM, exclusions, versions
 
 ## Quick Checks
 
-- [ ] Use parent POM for Spring Boot projects
-- [ ] Centralize versions in properties
-- [ ] Use dependencyManagement for version control
-- [ ] Import BOMs for related dependencies
+- [ ] Use appropriate dependency scopes
+- [ ] Centralize versions in properties or BOM
+- [ ] Configure compiler for target Java version
+- [ ] Use Surefire for unit tests, Failsafe for integration
+- [ ] Profile-based builds for environments

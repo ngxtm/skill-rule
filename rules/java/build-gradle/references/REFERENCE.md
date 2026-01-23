@@ -2,11 +2,13 @@
 
 ## References
 
-- [**Kotlin DSL**](kotlin-dsl.md) - Type-safe build scripts, migration from Groovy
+- [**Kotlin DSL**](kotlin-dsl.md) - Build scripts, version catalogs, multi-project
+- [**Task Configuration**](task-configuration.md) - Task types, dependencies, caching
 
 ## Quick Checks
 
-- [ ] Use Kotlin DSL (.gradle.kts) for new projects
-- [ ] Use implementation over compile (deprecated)
-- [ ] Define toolchain for consistent JDK version
-- [ ] Use version catalogs for dependency versions
+- [ ] Use Kotlin DSL for type-safe builds
+- [ ] Version catalogs for centralized dependencies
+- [ ] Lazy task configuration with register()
+- [ ] Enable build cache for faster builds
+- [ ] Use configuration avoidance APIs
