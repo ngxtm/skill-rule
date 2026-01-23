@@ -97,11 +97,32 @@ Modern fullstack React framework standards (App Router).
 - [**Architecture**](nextjs/architecture/SKILL.md) (P2) - Feature-Sliced Design (FSD).
 - [**State Management**](nextjs/state-management/SKILL.md) (P2) - URL-state, avoiding global stores.
 
+### ☕ Java (Language & Frameworks)
+
+Modern Java development with Spring Boot, Quarkus, and Micronaut.
+
+- [**Core Language**](java/java-core-language/SKILL.md) (P0) - Records, Sealed Classes, Pattern Matching.
+- [**Collections & Streams**](java/java-collections-streams/SKILL.md) (P0) - Stream API, Collectors, Optional.
+- [**Concurrency**](java/java-concurrency/SKILL.md) (P0) - Executors, CompletableFuture, Virtual Threads.
+- [**Project Structure**](java/java-project-structure/SKILL.md) (P0) - Maven/Gradle layout, Modules.
+- [**Spring Boot Architecture**](java/spring-boot-architecture/SKILL.md) (P0) - Auto-configuration, Profiles.
+- [**Spring Boot Web**](java/spring-boot-web/SKILL.md) (P0) - REST Controllers, Validation.
+- [**Spring Security**](java/spring-security/SKILL.md) (P0) - JWT, OAuth2, Method Security.
+- [**Spring Data JPA**](java/spring-data-jpa/SKILL.md) (P0) - Entities, Repositories, Transactions.
+- [**Spring Batch**](java/spring-batch/SKILL.md) (P1) - Job Configuration, Chunk Processing.
+- [**Spring Cloud**](java/spring-cloud/SKILL.md) (P1) - Service Discovery, Circuit Breakers.
+- [**Quarkus Core**](java/quarkus-core/SKILL.md) (P1) - CDI, Configuration, Dev Mode.
+- [**Quarkus Reactive**](java/quarkus-reactive/SKILL.md) (P1) - Mutiny, Reactive Routes.
+- [**Micronaut Core**](java/micronaut-core/SKILL.md) (P1) - Compile-time DI, Configuration.
+- [**Micronaut Reactive**](java/micronaut-reactive/SKILL.md) (P1) - Reactive Types, HTTP Clients.
+- [**GraalVM Native**](java/graalvm-native/SKILL.md) (P1) - Native Image, Reflection Config.
+- [**Maven Build**](java/build-maven/SKILL.md) (P2) - POM, Dependency Management.
+- [**Gradle Build**](java/build-gradle/SKILL.md) (P2) - Kotlin DSL, Tasks.
+- [**Testing (JUnit & Mockito)**](java/testing-junit-mockito/SKILL.md) (P2) - JUnit 5, Test Slices.
+
 ### 🚀 Coming Soon
 
-- **Go** (Language)
 - **Angular** (Framework)
-- **Java** (Language)
 - **Kotlin** (Language)
 
 ---
