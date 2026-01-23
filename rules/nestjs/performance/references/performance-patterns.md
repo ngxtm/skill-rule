@@ -91,7 +91,6 @@ if (cluster.isPrimary) {
 ## Lazy Loading Modules
 
 ```typescript
-// Lazy load heavy modules
 @Module({})
 export class AppModule {
   static forRoot(): DynamicModule {
